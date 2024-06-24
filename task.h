@@ -12,7 +12,6 @@ public:
     QString Star;
     Task* next ;
 public:
-    Task();
     void set_task_info(Task New_Task)
     {
         Task_Name = New_Task.Task_Name ;
