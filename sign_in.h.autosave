@@ -19,8 +19,8 @@ public:
     void getUsers(QList<User>* users_list) ;
 
 private slots:
-    void on_sign_in_PushB_clicked();
-    
+    void on_Sign_in_pushButton_clicked();
+
 private:
     Ui::Sign_In *ui;
     QList<User>* users ;
