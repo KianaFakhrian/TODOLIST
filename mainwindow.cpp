@@ -31,7 +31,7 @@ void MainWindow::on_Login_PushB_clicked()
 {
     if(ui->UserName_LineEdit->text().isEmpty() || ui->Password_LineEdit->text().isEmpty())
     {
-        QMessageBox::warning(this,"invalid username or password","Please Enter right username and password") ;
+        QMessageBox::warning(this,"unfilled fields","Please fill all the fields correctly") ;
         return ;
     }
     QString username = ui->UserName_LineEdit->text() ;
@@ -89,7 +89,8 @@ bool MainWindow::Is_User_Professor()
 }
 void MainWindow::on_sign_in_PushB_clicked()
 {
-    QStatusBar*statusBar = new QStatusBar(this) ;
-    setStatusBar(statusBar);
-    statusBar->showMessage("asfasdfasdfaf");
+    hide() ;
+    sign_in = new Sign_In(this) ;
+    sign_in->getUsers(&users_list);
+    sign_in->show();
 }

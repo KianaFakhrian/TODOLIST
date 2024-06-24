@@ -6,6 +6,7 @@
 #include "user.h"
 #include "professor_panel.h"
 #include "student_panel.h"
+#include "sign_in.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,10 +34,10 @@ private:
     Ui::MainWindow *ui;
     Professor_Panel* professor_panel ;
     Student_Panel* student_panel ;
+    Sign_In* sign_in ;
     QString username ;
     QString password ;
     QList<User> users_list ;
-
 };
 
 #endif // MAINWINDOW_H
