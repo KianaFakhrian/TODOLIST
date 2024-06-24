@@ -1,0 +1,24 @@
+#include "sign_in.h"
+#include "ui_sign_in.h"
+
+Sign_In::Sign_In(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::Sign_In)
+{
+    ui->setupUi(this);
+}
+
+Sign_In::~Sign_In()
+{
+    delete ui;
+}
+
+void Sign_In::getUsers(QList<User> *Users_list)
+{
+    users = Users_list ;
+}
+
+void Sign_In::on_sign_in_PushB_clicked()
+{
+    
+}

@@ -26,12 +26,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     linkedlist.cpp \
-    task.cpp \
-    file_functions.cpp
+    student_panel.cpp \
+    professor_panel.cpp \
+    sign_in.cpp
 
 HEADERS  += mainwindow.h \
     linkedlist.h \
     task.h \
-    file_functions.h
+    file_functions.h \
+    user.h \
+    student_panel.h \
+    professor_panel.h \
+    sign_in.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    student_panel.ui \
+    professor_panel.ui \
+    sign_in.ui
