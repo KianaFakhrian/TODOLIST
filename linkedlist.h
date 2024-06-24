@@ -10,6 +10,7 @@ public:
     linkedList();
 public:
     void pushFront(Task) ;
+    void init() ;
 
 };
 
