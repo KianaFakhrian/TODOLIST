@@ -10,8 +10,6 @@ public:
     QString password ;
     linkedList Tasks ;
 public:
-    User();
-public:
     void loadDate(const QStringList& data )
     {
         if(data.size() >= 2)
