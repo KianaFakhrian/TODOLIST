@@ -12,3 +12,8 @@ Student_Panel::~Student_Panel()
 {
     delete ui;
 }
+
+void Student_Panel::get_Users(QList<User> *users_List)
+{
+    users = users_List ;
+}
