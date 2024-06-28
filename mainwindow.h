@@ -29,6 +29,8 @@ private slots:
     void on_Login_PushB_clicked();
 
     void on_sign_in_PushB_clicked();
+public slots:
+    void close_signin() ;
 
 private:
     Ui::MainWindow *ui;
