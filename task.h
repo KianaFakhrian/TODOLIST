@@ -8,8 +8,9 @@ class Task
 public:
     QString Task_Name ;
     QString Due_Date ;
-    QString Explanation ;
-    QString Star;
+    QString Explanation = " " ;
+    bool Star ;
+    bool done;
     Task* next ;
 public:
     void set_task_info(Task New_Task)
@@ -21,12 +22,13 @@ public:
     }
     void loadData(const QStringList& data)
     {
-        if(data.size() >= 4)
+        if(data.size() >= 5)
         {
             Task_Name = data.at(0) ;
             Due_Date = data.at(1) ;
             Explanation = data.at(2) ;
-            Star = data.at(3) ;
+            Star = (data.at(3) == "0");
+            done = (data.at(4) == "0") ;
         }
     }
 };
