@@ -21,7 +21,7 @@ public:
         }
         QTextStream out(&file) ;
 
-            out << users.username << " " << users.password << "\n" ;
+            out << users.username << "," << users.password << "\n" ;
 
         file.close();
     }
@@ -38,32 +38,41 @@ public:
         while(!in.atEnd())
         {
             QString line = in.readLine();
-            QStringList data = line.split(' ');
+            QStringList data = line.split(',');
 
             User tmp_user ;
-            tmp_user.loadDate(data);
+            tmp_user.loadData(data);
             users.append(tmp_user);
         }
         file.close();
     }
 
-    static void write_Tasks_To_File(const QString&filePath , Task tasks,QString username)
+    static void write_Tasks_To_File(const QString&filePath , Task tasks,QString username,QString list_name)
     {
         QFile file(filePath);
-
+        QString DoneString ;
+        QString StarString ;
         if (!file.open(QFile::Append | QFile::Text)) {
             qWarning() << "Cannot open file for writing:" << file.errorString();
             return;
         }
         QTextStream out(&file) ;
-
-            out <<username << " " <<tasks.Task_Name << " " << tasks.Due_Date << " "
-                << tasks.Explanation << " "<< tasks.Star <<"/n" ;
+        if(tasks.done)
+            DoneString = "1" ;
+        else
+            DoneString = "0" ;
+        if(tasks.Star)
+            StarString = "1" ;
+        else
+            StarString = "0" ;
+            out <<username<<","<< list_name << "," <<tasks.Task_Name << "," << tasks.Due_Date << ","
+                << tasks.Explanation << ","<< tasks.Star <<"," << DoneString << "\n" ;
 
         file.close();
     }
     static void read_Tasks_From_File(const QString& filepath , QList<User>& users)
     {
+        QString one = "1" ;
         QFile file(filepath) ;
 
         if(!file.open(QFile::ReadOnly | QFile::Text))
@@ -75,22 +84,109 @@ public:
         while(!in.atEnd())
         {
             QString line = in.readLine() ;
-            QStringList data = line.split(' ') ;
+            QStringList data = line.split(',') ;
 
-            if(data.size() >= 5)
+            if(data.size() >= 7)
             {
                 QString username = data.at(0) ;
+                QString list_name = data.at(1) ;
                 Task task ;
-                task.loadData(data.mid(1));
+                task.loadData(data.mid(2));
 
                 for(User& Users : users)
                 {
                     if(Users.username == username)
-                        Users.Tasks.pushFront(task);
+                    {
+                        if(data.at(6) == one)
+                            task.done = true ;
+                        else
+                            task.done = false ;
+                        if(data.at(5) == one)
+                            task.Star = true ;
+                        else
+                            task.Star = false ;
+                        Users.list_of_tasks[list_name] << task ;
+                    }
                 }
             }
         }
         file.close();
     }
+    static void updateDoneTask(const QString& filePath,QList<User> users,QString list_name,const QString task_name,bool done,QString username)
+    {
+
+        QString Done ;
+        if(done)
+        {
+            Done = "1";
+
+        }else
+            Done = "0" ;
+        QString updated_line ;
+        bool userFound = false ;
+        for( User users_list: users)
+        {
+            if(users_list.username == username)
+            {
+                Task* task = users_list.list_of_tasks[list_name].head ;
+                while(task != nullptr)
+                {
+                    if(task->Task_Name == task_name)
+                        break ;
+                    task = task->next ;
+                }
+                updated_line = users_list.username + "," + list_name + "," + task_name + "," +
+                        task->Due_Date + "," + task->Explanation + "," +
+                        task->Star + "," + Done;
+                userFound = true ;
+                break ;
+            }
+            if(userFound)
+                break ;
+
+        }
+
+            QFile originalFile(filePath);
+            if (!originalFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                qWarning() << "Failed to open original file for reading:" << originalFile.errorString();
+                return;
+            }
+            QString tempFilePath = filePath + ".tmp";
+            QFile tempFile(tempFilePath);
+            if (!tempFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                qWarning() << "Failed to create temporary file:" << tempFile.errorString();
+                originalFile.close();
+                return;
+            }
+
+            QTextStream out(&tempFile);
+
+            QTextStream in(&originalFile);
+            while (!in.atEnd()) {
+                QString line = in.readLine();
+                QStringList data = line.split(',');
+
+                if (data.size() >= 7 && data[0] == username &&
+                        data[1] == list_name &&data[2] == task_name) {
+                    out << updated_line << '\n';
+                } else {
+                    out << line << '\n';
+                }
+            }
+
+            originalFile.close();
+            tempFile.close();
+
+            if (!QFile::remove(filePath)) {
+                qWarning() << "Failed to remove original file:" << filePath;
+            } else {
+                if (!QFile::rename(tempFilePath, filePath)) {
+                    qWarning() << "Failed to rename temporary file to original file:" << tempFilePath;
+                } else {
+                    qDebug() << "File updated successfully.";
+                }
+            }
+        }
+
 };
 #endif // FILE_FUNCTIONS_H
