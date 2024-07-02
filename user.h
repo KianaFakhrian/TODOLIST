@@ -1,6 +1,7 @@
 #ifndef USER_H
 #define USER_H
 #include "linkedlist.h"
+#include <QMap>
 
 class User
 {
@@ -8,9 +9,9 @@ class User
 public:
     QString username ;
     QString password ;
-    linkedList Tasks ;
+    QMap<QString,linkedList> list_of_tasks ;
 public:
-    void loadDate(const QStringList& data )
+    void loadData(const QStringList& data )
     {
         if(data.size() >= 2)
         {
