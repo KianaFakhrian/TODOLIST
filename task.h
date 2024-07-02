@@ -9,7 +9,7 @@ public:
     QString Task_Name ;
     QString Due_Date ;
     QString Explanation = " " ;
-    bool Star ;
+    bool Star;
     bool done;
     Task* next ;
 public:
@@ -19,6 +19,7 @@ public:
         Due_Date = New_Task.Due_Date ;
         Explanation = New_Task.Explanation ;
         Star = New_Task.Star ;
+        done = New_Task.done ;
     }
     void loadData(const QStringList& data)
     {
@@ -27,8 +28,15 @@ public:
             Task_Name = data.at(0) ;
             Due_Date = data.at(1) ;
             Explanation = data.at(2) ;
-            Star = (data.at(3) == "0");
-            done = (data.at(4) == "0") ;
+            if(data.at(3) == "1")
+                Star = true ;
+            else
+                Star = false ;
+            if(data.at(4) == "1")
+                done = true ;
+            else
+                done = false ;
+
         }
     }
 };
