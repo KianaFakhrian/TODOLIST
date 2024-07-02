@@ -89,11 +89,24 @@
    <widget class="QListWidget" name="listWidgetTask">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>270</y>
-      <width>256</width>
-      <height>192</height>
+      <x>0</x>
+      <y>11</y>
+      <width>281</width>
+      <height>541</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Back_toList">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>490</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back to list</string>
     </property>
    </widget>
   </widget>
