@@ -44,6 +44,9 @@ private slots:
 
     void star_task(QListWidgetItem*) ;
 
+
+    void on_pushButton_Back_toList_clicked();
+
 private:
     Ui::Professor_Panel *ui;
     QString task_name ;

@@ -9,8 +9,10 @@ Professor_Panel::Professor_Panel(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->listWidgetTask->setVisible(false);
+    ui->pushButton_Back_toList->setVisible(false);
     connect(ui->listWidgetTask,&QListWidget::itemClicked,this,&Professor_Panel::update_tasks) ;
     connect(ui->listWidget, &QListWidget::itemClicked, this, &Professor_Panel::switch_list);
+    connect(ui->listWidgetTask,&QListWidget::itemDoubleClicked,this,&Professor_Panel::star_task) ;
 }
 Professor_Panel::~Professor_Panel()
 {
@@ -23,14 +25,12 @@ void Professor_Panel::get_Users(QList<User> *Users_List)
 }
 void Professor_Panel::add_Task()
 {
-    task_name = ui->task_name_lineEdit->text() ;
-    due_date = ui->dateTimeEdit->text() ;
     Task task ;
     task.Task_Name = ui->task_name_lineEdit->text() ;
     task.Due_Date = ui->dateTimeEdit->text() ;
     task.done = false ;
-
-    QListWidgetItem *item = new QListWidgetItem(task_name, ui->listWidgetTask);
+    task.Star = false ;
+    QListWidgetItem *item = new QListWidgetItem(task.Task_Name, ui->listWidgetTask);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
     item->setCheckState(Qt::Unchecked);
     item->setToolTip(due_date);
@@ -77,7 +77,16 @@ void Professor_Panel::load_tasks()
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setCheckState(tmp_task->done ? Qt::Checked : Qt::Unchecked);
         item->setToolTip(tmp_task->Due_Date);
+        if(tmp_task->Star)
+        {
+            item->setIcon(QIcon("/Users/HP/Downloads/star.png"));
+        }
+        if(tmp_task->done)
+        {
+            item->setCheckState(Qt::Checked) ;
+        }
         ui->listWidgetTask->addItem(item);
+
         tmp_task = tmp_task->next;
     }
 }
@@ -88,6 +97,7 @@ void Professor_Panel::switch_list(QListWidgetItem *item)
     ui->listWidgetTask->clear();
     load_tasks();
     ui->listWidgetTask->setVisible(true);
+    ui->pushButton_Back_toList->setVisible(true);
 }
 
 void Professor_Panel::on_add_task_button_clicked()
@@ -100,13 +110,6 @@ void Professor_Panel::on_new_list_Button_clicked()
     add_list();
     ui->list_name_lineEdit->setText("");
 }
-
-//void Professor_Panel::on_listWidget_itemClicked(QListWidgetItem *item)
-//{
-//    currentList = item->text() ;
-//    load_tasks();
-//}
-
 void Professor_Panel::update_tasks(QListWidgetItem* item)
 {
     QString taskName = item->text() ;
@@ -125,19 +128,27 @@ void Professor_Panel::update_tasks(QListWidgetItem* item)
         }
         task = task->next;
     }
-
 }
-
 void Professor_Panel::star_task(QListWidgetItem *item)
 {
         QString task_name = item->text() ;
         Task* task = user->list_of_tasks[currentList].head ;
+        item->setIcon(QIcon("/Users/HP/Downloads/star.png"));
         while(task != nullptr)
         {
             if(task->Task_Name == task_name)
             {
+                task->Star = true ;
                 break ;
             }
+            task = task->next ;
         }
-        task->Star = true ;
+        File_Functions::updateStaredTask("tasks_file.txt",*users,currentList,task_name,task->Star,user->username) ;
+}
+
+
+void Professor_Panel::on_pushButton_Back_toList_clicked()
+{
+    ui->listWidgetTask->hide();
+    ui->pushButton_Back_toList->setVisible(false);
 }
