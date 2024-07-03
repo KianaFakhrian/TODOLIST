@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>698</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <widget class="QPushButton" name="add_task_button">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>380</x>
       <y>120</y>
       <width>93</width>
       <height>28</height>
@@ -43,17 +43,17 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>5</x>
-      <y>10</y>
-      <width>271</width>
-      <height>551</height>
+      <x>0</x>
+      <y>20</y>
+      <width>281</width>
+      <height>541</height>
      </rect>
     </property>
    </widget>
    <widget class="QLineEdit" name="task_name_lineEdit">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>360</x>
       <y>40</y>
       <width>113</width>
       <height>22</height>
@@ -66,8 +66,8 @@
    <widget class="QDateTimeEdit" name="dateTimeEdit">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>80</y>
+      <x>330</x>
+      <y>70</y>
       <width>194</width>
       <height>22</height>
      </rect>
@@ -86,27 +86,32 @@
      <string>List Name</string>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidgetTask">
+   <widget class="QTreeWidget" name="treeWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>11</y>
+      <x>380</x>
+      <y>170</y>
       <width>281</width>
-      <height>541</height>
+      <height>201</height>
      </rect>
     </property>
+    <column>
+     <property name="text">
+      <string notr="true">1</string>
+     </property>
+    </column>
    </widget>
-   <widget class="QPushButton" name="pushButton_Back_toList">
+   <widget class="QLineEdit" name="lineEdit_description">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>490</y>
-      <width>93</width>
-      <height>28</height>
+      <x>370</x>
+      <y>90</y>
+      <width>113</width>
+      <height>22</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Back to list</string>
+    <property name="placeholderText">
+     <string>Description</string>
     </property>
    </widget>
   </widget>

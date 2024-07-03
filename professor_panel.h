@@ -5,6 +5,7 @@
 #include "user.h"
 #include "linkedlist.h"
 #include <QListWidgetItem>
+#include <QTreeWidgetItem>
 #include "file_functions.h"
 #include <QMap>
 #include <QMenu>
@@ -21,14 +22,20 @@ public:
     virtual ~Professor_Panel();
 public:
     void get_Users(QList<User>* users_List) ;
+
     void add_Task() ;
+
     void add_list() ;
-//    void delete_tasks(QListWidgetItem*) ;
+
     void set_User(User*) ;
+
     void load_list() ;
+
     void load_tasks() ;
+
     void search_user() ;
 
+    void add_Child(QTreeWidgetItem* parent,QString description,QString due_date) ;
 
 
 private slots:
@@ -38,14 +45,12 @@ private slots:
 
     void switch_list(QListWidgetItem* item) ;
 
-//    void on_listWidget_itemClicked(QListWidgetItem *item);
+    void update_tasks(QTreeWidgetItem*) ;
 
-    void update_tasks(QListWidgetItem*) ;
-
-    void star_task(QListWidgetItem*) ;
+    void star_task(QTreeWidgetItem*) ;
 
 
-    void on_pushButton_Back_toList_clicked();
+//    void on_pushButton_Back_toList_clicked();
 
 private:
     Ui::Professor_Panel *ui;
