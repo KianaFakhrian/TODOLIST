@@ -6,9 +6,10 @@
 #include "linkedlist.h"
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
+#include <QSystemTrayIcon>
+#include <QApplication>
 #include "file_functions.h"
 #include <QMap>
-#include <QMenu>
 namespace Ui {
 class Professor_Panel;
 }
@@ -37,6 +38,7 @@ public:
 
     void add_Child(QTreeWidgetItem* parent,QString description,QString due_date) ;
 
+    void loadTheme(const QString &) ;
 
 private slots:
     void on_add_task_button_clicked();
@@ -49,6 +51,9 @@ private slots:
 
     void star_task(QTreeWidgetItem*) ;
 
+    void changeTheme(const QString &) ;
+
+    void show_notification(const QString &title,const QString &message) ;
 
 //    void on_pushButton_Back_toList_clicked();
 
@@ -60,6 +65,7 @@ private:
     QList<User>* users ;
     QString currentList;
     QMenu *taskListMenu;
+    QSystemTrayIcon *trayIcon;
 };
 
 #endif // PROFESSOR_PANEL_H

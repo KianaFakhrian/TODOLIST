@@ -43,7 +43,7 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>20</y>
       <width>281</width>
       <height>541</height>
@@ -112,6 +112,28 @@
     </property>
     <property name="placeholderText">
      <string>Description</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="ThemecomboBox">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>20</y>
+      <width>61</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="whatsThis">
+     <string>theme</string>
+    </property>
+    <property name="accessibleName">
+     <string>theme</string>
+    </property>
+    <property name="editable">
+     <bool>false</bool>
+    </property>
+    <property name="currentText">
+     <string/>
     </property>
    </widget>
   </widget>

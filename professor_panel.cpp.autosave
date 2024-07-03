@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <QSystemTrayIcon>
 #include <QDate>
-
+#include <QMap>
 Professor_Panel::Professor_Panel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Professor_Panel)
@@ -28,9 +28,13 @@ Professor_Panel::Professor_Panel(QWidget *parent) :
 
     trayIcon = new QSystemTrayIcon(QIcon("/Users/HP/Documents/ToDoList/icons8-notification-64.png")) ;
 
-    for(pair<QString,linkedList> Pair : user->list_of_tasks)
+    for(QPair<QString,linkedList> Pair : user->list_of_tasks)
     {
-        Task* task = Pair.second.h ;
+        Task* task = Pair.second.head ;
+        while(task != nullptr)
+        {
+            if()
+        }
     }
 
 }

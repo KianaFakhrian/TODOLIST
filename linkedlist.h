@@ -14,7 +14,7 @@ public:
     }
 
 public:
-    void operator <<(Task task)
+    void operator << (Task task)
     {
         Task* New_Task = new Task() ;
         New_Task->set_task_info(task);
