@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "user.h"
 #include "linkedlist.h"
+#include "notification.h"
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
 #include <QSystemTrayIcon>
@@ -40,6 +41,14 @@ public:
 
     void loadTheme(const QString &) ;
 
+    void getPDF(const QString &) ;
+
+    void showing_notif() ;
+
+    void show_notification(const QString &title,const QString &message) ;
+public slots:
+    void close_notif_Page() ;
+
 private slots:
     void on_add_task_button_clicked();
 
@@ -53,9 +62,12 @@ private slots:
 
     void changeTheme(const QString &) ;
 
-    void show_notification(const QString &title,const QString &message) ;
+
+
 
 //    void on_pushButton_Back_toList_clicked();
+
+    void on_get_PDF_pushButton_clicked();
 
 private:
     Ui::Professor_Panel *ui;
@@ -63,6 +75,7 @@ private:
     QString due_date ;
     User* user ;
     QList<User>* users ;
+    Notification* notification ;
     QString currentList;
     QMenu *taskListMenu;
     QSystemTrayIcon *trayIcon;
