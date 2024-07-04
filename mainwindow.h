@@ -40,6 +40,7 @@ private:
     QString username ;
     QString password ;
     QList<User> users_list ;
+    User user ;
 };
 
 #endif // MAINWINDOW_H

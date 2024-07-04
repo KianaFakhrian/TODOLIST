@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     linkedlist.cpp \
     student_panel.cpp \
     professor_panel.cpp \
-    sign_in.cpp
+    sign_in.cpp \
+    notification.cpp
 
 HEADERS  += mainwindow.h \
     linkedlist.h \
@@ -36,12 +37,14 @@ HEADERS  += mainwindow.h \
     user.h \
     student_panel.h \
     professor_panel.h \
-    sign_in.h
+    sign_in.h \
+    notification.h
 
 FORMS    += mainwindow.ui \
     student_panel.ui \
     professor_panel.ui \
-    sign_in.ui
+    sign_in.ui \
+    notification.ui
 
 RESOURCES += \
     theme.qrc

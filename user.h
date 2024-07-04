@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 #include "linkedlist.h"
-#include <QMap>
+#include <map>
 
 class User
 {
@@ -9,7 +9,7 @@ class User
 public:
     QString username ;
     QString password ;
-    QMap<QString,linkedList> list_of_tasks ;
+    std::map<QString,linkedList> list_of_tasks ;
 public:
     void loadData(const QStringList& data )
     {

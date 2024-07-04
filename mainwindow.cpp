@@ -52,6 +52,7 @@ void MainWindow::on_Login_PushB_clicked()
     {
         hide() ;
         professor_panel->get_Users(&users_list) ;
+        professor_panel->showing_notif();
         professor_panel->show();
     }
 }
@@ -63,6 +64,7 @@ bool MainWindow::valid_User_Pass(const QString& Username,const QString& Password
         {
             username = users.username ;
             password = users.password ;
+            user = users ;
             professor_panel->set_User(&users) ;
 //            student_panel->set_User(&users) ;
             return true ;

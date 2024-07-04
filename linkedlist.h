@@ -7,6 +7,7 @@ class linkedList
 public:
     Task* head ;
     QString name ;
+    int size ;
 public:
     linkedList()
     {
@@ -21,11 +22,14 @@ public:
 
         New_Task->next = this->head ;
         head = New_Task ;
+        size ++ ;
+
     }
 
     void init()
     {
         head = nullptr ;
+        size = 0 ;
     }
 
     void set_Name(QString) ;
