@@ -1,13 +1,18 @@
 #include "professor_panel.h"
 #include "ui_professor_panel.h"
 #include "file_functions.h"
-#include <QDebug>
 #include <QApplication>
 #include <QFile>
 #include <QTextStream>
 #include <QSystemTrayIcon>
 #include <QDate>
-
+#include <map>
+#include <QtPrintSupport/QPrinter>
+#include <QTextDocument>
+#include <QFileDialog>
+#include <QTextCursor>
+#include <QPixmap>
+#include <QIcon>
 Professor_Panel::Professor_Panel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Professor_Panel)
@@ -23,15 +28,11 @@ Professor_Panel::Professor_Panel(QWidget *parent) :
     connect(ui->listWidget, &QListWidget::itemClicked, this, &Professor_Panel::switch_list);
     connect(ui->treeWidget,&QTreeWidget::itemDoubleClicked,this,&Professor_Panel::star_task) ;
 
-    QDateTime currentDate = QDateTime::currentDateTime() ;
-    QString Date = currentDate.toString("yyyy/MM/dd") ;
+
 
     trayIcon = new QSystemTrayIcon(QIcon("/Users/HP/Documents/ToDoList/icons8-notification-64.png")) ;
 
-    for(pair<QString,linkedList> Pair : user->list_of_tasks)
-    {
-        Task* task = Pair.second.h ;
-    }
+    trayIcon->show();
 
 }
 Professor_Panel::~Professor_Panel()
@@ -60,8 +61,10 @@ void Professor_Panel::set_User(User *logged_in)
 void Professor_Panel::load_list()
 {
     ui->listWidget->clear();
-    for(const QString &list_name : user->list_of_tasks.keys())
+    QString list_name ;
+    for(std::pair<QString,linkedList> Pair : user->list_of_tasks)
     {
+        list_name = Pair.first ;
         QListWidgetItem *item = new QListWidgetItem(list_name) ;
         ui->listWidget->addItem(item);
     }
@@ -96,14 +99,20 @@ void Professor_Panel::add_Task()
     task.Explanation = ui->lineEdit_description->text() ;
     task.done = false ;
     task.Star = false ;
+    task.notification = false ;
     QTreeWidgetItem *item = new QTreeWidgetItem(ui->treeWidget);
     item->setText(0,task.Task_Name);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
     item->setCheckState(0,Qt::Unchecked);
     user->list_of_tasks[currentList] << task ;
     ui->treeWidget->addTopLevelItem(item);
+
+
     File_Functions::write_Tasks_To_File("tasks_file.txt",task,user->username,currentList) ;
     add_Child(item,task.Explanation,task.Due_Date);
+
+
+
 }
 
 void Professor_Panel::add_Child(QTreeWidgetItem* parent,QString description,QString due_date)
@@ -136,7 +145,15 @@ void Professor_Panel::switch_list(QListWidgetItem *item)
 void Professor_Panel::on_add_task_button_clicked()
 {
     add_Task();
+    notification = new Notification(this) ;
+    notification->get_user(user);
+    notification->get_task_name(ui->task_name_lineEdit->text() );
+    notification->get_list_name(currentList);
+    notification->get_users(users);
+    connect(notification,&Notification::exit,this,&Professor_Panel::close_notif_Page) ;
+    notification->show();
     ui->task_name_lineEdit->setText("");
+
 }
 void Professor_Panel::on_new_list_Button_clicked()
 {
@@ -189,10 +206,63 @@ void Professor_Panel::changeTheme(const QString & theme)
 
 void Professor_Panel::show_notification(const QString &title, const QString &message)
 {
-    trayIcon->showMessage(title,message,QSystemTrayIcon::Information,3000);
+    trayIcon->showMessage(title,message,QSystemTrayIcon::NoIcon,3000);
 }
-//void Professor_Panel::on_pushButton_Back_toList_clicked()
-//{
-//    ui->listWidgetTask->hide();
-//    ui->pushButton_Back_toList->setVisible(false);
-//}
+
+void Professor_Panel::getPDF(const QString & List_name)
+{
+    Task* task = user->list_of_tasks[List_name].head ;
+    QTextDocument document ;
+    QString html = "<h1>Task List: " + List_name + "</h1><ul>" ;
+    while(task != nullptr)
+    {
+        QString star = task->Star ? "⭐" : "";
+        QString done = task->done ? "✅" : "❌";
+        html += "<li>" + task->Task_Name + "-" + task->Due_Date + "<br>" + task->Explanation + "</li>" ;
+        task = task->next ;
+    }
+    html += "</ul>" ;
+    document.setHtml(html);
+    QString filePath = QFileDialog::getSaveFileName(this,"Save PDF","","*.pdf") ;
+    if(filePath.isEmpty())
+        return ;
+//    QPrinter printer(QPrinter::PrinterResolution) ;
+//    printer.setOutputFormat(QPrinter::PdfFormat);
+//    printer.setOutputFileName(filePath);
+//    document.print(&printer) ;
+
+}
+
+void Professor_Panel::showing_notif()
+{
+    QDate currentDate = QDate::currentDate() ;
+    QString Date = currentDate.toString("M/d/yyyy") ;
+    qDebug() << Date ;
+    for(std::pair<QString,linkedList> Pair : user->list_of_tasks)
+    {
+        Task* task = Pair.second.head ;
+
+        while(task != nullptr)
+        {
+
+            QStringList data = task->Due_Date.split(' ') ;
+            if(task->notification && Date == data.at(0) && task->done == false)
+            {
+                qDebug() << data.at(0) ;
+
+                show_notification("Tasks for today","You have to do " + task->Task_Name + " today.");
+                break ;
+            }
+            task = task->next ;
+        }
+    }
+}
+void Professor_Panel::on_get_PDF_pushButton_clicked()
+{
+    getPDF(currentList);
+}
+void Professor_Panel::close_notif_Page()
+{
+    notification->close() ;
+    this->show();
+}
