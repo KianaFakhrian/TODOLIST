@@ -11,6 +11,7 @@ public:
     QString Explanation = " " ;
     bool Star;
     bool done;
+    bool notification ;
     Task* next ;
 public:
     void set_task_info(Task New_Task)
@@ -20,10 +21,11 @@ public:
         Explanation = New_Task.Explanation ;
         Star = New_Task.Star ;
         done = New_Task.done ;
+        notification = New_Task.notification ;
     }
     void loadData(const QStringList& data)
     {
-        if(data.size() >= 5)
+        if(data.size() >= 6)
         {
             Task_Name = data.at(0) ;
             Due_Date = data.at(1) ;
@@ -36,6 +38,10 @@ public:
                 done = true ;
             else
                 done = false ;
+            if(data.at(5) == "1")
+                notification = true ;
+            else
+                notification = false ;
 
         }
     }
