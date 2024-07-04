@@ -89,8 +89,8 @@
    <widget class="QTreeWidget" name="treeWidget">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>170</y>
+      <x>390</x>
+      <y>200</y>
       <width>281</width>
       <height>201</height>
      </rect>
@@ -117,9 +117,9 @@
    <widget class="QComboBox" name="ThemecomboBox">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>680</x>
       <y>20</y>
-      <width>61</width>
+      <width>101</width>
       <height>22</height>
      </rect>
     </property>
@@ -134,6 +134,19 @@
     </property>
     <property name="currentText">
      <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="get_PDF_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>350</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Get PDF</string>
     </property>
    </widget>
   </widget>
