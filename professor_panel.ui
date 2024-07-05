@@ -89,8 +89,8 @@
    <widget class="QTreeWidget" name="treeWidget">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>200</y>
+      <x>320</x>
+      <y>230</y>
       <width>281</width>
       <height>201</height>
      </rect>
@@ -105,7 +105,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>90</y>
+      <y>100</y>
       <width>113</width>
       <height>22</height>
      </rect>
@@ -147,6 +147,29 @@
     </property>
     <property name="text">
      <string>Get PDF</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="list_color_comboBox">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>50</y>
+      <width>73</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="get_stared_pushButton">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>350</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>get stared tasks</string>
     </property>
    </widget>
   </widget>
