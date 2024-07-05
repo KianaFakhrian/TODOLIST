@@ -3,12 +3,13 @@
 
 #include <QMainWindow>
 #include "user.h"
+#include "professor_panel.h"
 
 namespace Ui {
 class Student_Panel;
 }
 
-class Student_Panel : public QMainWindow
+class Student_Panel : public Professor_Panel
 {
     Q_OBJECT
 
