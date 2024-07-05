@@ -165,8 +165,6 @@ public:
 
     static void updateStaredTask(const QString& filePath,QList<User> users,QString list_name,const QString task_name,bool star,QString username)
     {
-
-
         QString updated_line ;
         bool userFound = false ;
         for( User users_list: users)
@@ -297,6 +295,5 @@ public:
                 }
             }
         }
-
 };
 #endif // FILE_FUNCTIONS_H
