@@ -5,6 +5,7 @@
 #include "user.h"
 #include "linkedlist.h"
 #include "notification.h"
+#include "starred_tasks.h"
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
 #include <QSystemTrayIcon>
@@ -46,10 +47,10 @@ public:
     void showing_notif() ;
 
     void show_notification(const QString &title,const QString &message) ;
-public slots:
-    void close_notif_Page() ;
 
-private slots:
+    void change_List_Color(QListWidgetItem*,const QColor&) ;
+
+public slots:
     void on_add_task_button_clicked();
 
     void on_new_list_Button_clicked();
@@ -62,20 +63,20 @@ private slots:
 
     void changeTheme(const QString &) ;
 
-
-
-
-//    void on_pushButton_Back_toList_clicked();
-
     void on_get_PDF_pushButton_clicked();
 
-private:
+    void on_get_stared_pushButton_clicked();
+
+    void close_notif_Page() ;
+
+protected:
     Ui::Professor_Panel *ui;
     QString task_name ;
     QString due_date ;
     User* user ;
     QList<User>* users ;
     Notification* notification ;
+    starred_tasks* Starred_Tasks ;
     QString currentList;
     QMenu *taskListMenu;
     QSystemTrayIcon *trayIcon;

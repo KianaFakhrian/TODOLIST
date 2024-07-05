@@ -11,27 +11,28 @@
 #include <QTextDocument>
 #include <QFileDialog>
 #include <QTextCursor>
-#include <QPixmap>
-#include <QIcon>
+#include <QBrush>
 Professor_Panel::Professor_Panel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Professor_Panel)
 {
     ui->setupUi(this);
+
     ui->ThemecomboBox->addItem("Light Theme");
     ui->ThemecomboBox->addItem("Dark Theme");
     connect(ui->ThemecomboBox,&QComboBox::currentTextChanged,this,&Professor_Panel::changeTheme) ;
+
+    ui->list_color_comboBox->addItem("Red");
     changeTheme("Light Theme") ;
+
     ui->treeWidget->clear();
     ui->treeWidget->setColumnCount(2);
+
     connect(ui->treeWidget,&QTreeWidget::itemClicked,this,&Professor_Panel::update_tasks) ;
     connect(ui->listWidget, &QListWidget::itemClicked, this, &Professor_Panel::switch_list);
     connect(ui->treeWidget,&QTreeWidget::itemDoubleClicked,this,&Professor_Panel::star_task) ;
 
-
-
     trayIcon = new QSystemTrayIcon(QIcon("/Users/HP/Documents/ToDoList/icons8-notification-64.png")) ;
-
     trayIcon->show();
 
 }
@@ -47,10 +48,22 @@ void Professor_Panel::get_Users(QList<User> *Users_List)
 void Professor_Panel::add_list()
 {
     QString list_name = ui->list_name_lineEdit->text() ;
-    user->list_of_tasks[list_name] = linkedList() ;
+    user->list_of_tasks.insert(std::make_pair(list_name,linkedList())) ;
     QListWidgetItem *item = new QListWidgetItem(list_name,ui->listWidget) ;
-    ui->listWidget->addItem(item);
+    QString list_color = ui->list_color_comboBox->currentText() ;
+    QColor color ;
+    if(list_color == "Red")
+    {
+        color = Qt::red ;
+    }
+    change_List_Color(item,color) ;
+    ui->listWidget->addItem(item) ;
     currentList = list_name ;
+}
+void Professor_Panel::change_List_Color(QListWidgetItem* item,const QColor& backGround)
+{
+    QBrush backgroundBrush(backGround) ;
+    item->setBackground(backgroundBrush);
 }
 void Professor_Panel::set_User(User *logged_in)
 {
@@ -68,7 +81,6 @@ void Professor_Panel::load_list()
         QListWidgetItem *item = new QListWidgetItem(list_name) ;
         ui->listWidget->addItem(item);
     }
-
 }
 
 void Professor_Panel::load_tasks()
@@ -110,9 +122,6 @@ void Professor_Panel::add_Task()
 
     File_Functions::write_Tasks_To_File("tasks_file.txt",task,user->username,currentList) ;
     add_Child(item,task.Explanation,task.Due_Date);
-
-
-
 }
 
 void Professor_Panel::add_Child(QTreeWidgetItem* parent,QString description,QString due_date)
@@ -136,7 +145,7 @@ void Professor_Panel::loadTheme(const QString & themeFile)
 
 void Professor_Panel::switch_list(QListWidgetItem *item)
 {
-    currentList= item->text() ;
+    currentList = item->text() ;
     ui->treeWidget->clear();
     load_tasks();
 //    ui->pushButton_Back_toList->setVisible(true);
@@ -209,6 +218,7 @@ void Professor_Panel::show_notification(const QString &title, const QString &mes
     trayIcon->showMessage(title,message,QSystemTrayIcon::NoIcon,3000);
 }
 
+
 void Professor_Panel::getPDF(const QString & List_name)
 {
     Task* task = user->list_of_tasks[List_name].head ;
@@ -216,9 +226,11 @@ void Professor_Panel::getPDF(const QString & List_name)
     QString html = "<h1>Task List: " + List_name + "</h1><ul>" ;
     while(task != nullptr)
     {
-        QString star = task->Star ? "⭐" : "";
-        QString done = task->done ? "✅" : "❌";
-        html += "<li>" + task->Task_Name + "-" + task->Due_Date + "<br>" + task->Explanation + "</li>" ;
+        QString star = task->Star ? "<img src='/Users/HP/Documents/ToDoList/star.png' width='16' height='16'>"  : "";
+        QString done = task->done ? "<img src='/Users/HP/Documents/ToDoList/checkmark.png' width = '16' height = '16'>"
+                                  : "<img src = 'C:/Users/HP/Documents/ToDoList/crossed.png' width = '16' height = '16'>" ;
+        html += "<li>" + task->Task_Name + " - " + task->Due_Date + " "
+                + done + " " + star + "<br>" + task->Explanation +"</li>" ;
         task = task->next ;
     }
     html += "</ul>" ;
@@ -226,10 +238,10 @@ void Professor_Panel::getPDF(const QString & List_name)
     QString filePath = QFileDialog::getSaveFileName(this,"Save PDF","","*.pdf") ;
     if(filePath.isEmpty())
         return ;
-//    QPrinter printer(QPrinter::PrinterResolution) ;
-//    printer.setOutputFormat(QPrinter::PdfFormat);
-//    printer.setOutputFileName(filePath);
-//    document.print(&printer) ;
+    QPrinter printer(QPrinter::PrinterResolution) ;
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(filePath);
+    document.print(&printer) ;
 
 }
 
@@ -265,4 +277,12 @@ void Professor_Panel::close_notif_Page()
 {
     notification->close() ;
     this->show();
+}
+
+void Professor_Panel::on_get_stared_pushButton_clicked()
+{
+    Starred_Tasks = new starred_tasks(this) ;
+    Starred_Tasks->get_list(user->list_of_tasks[currentList]);
+    Starred_Tasks->load_starred_tasks();
+    Starred_Tasks->show();
 }
