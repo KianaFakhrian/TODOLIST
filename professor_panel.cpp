@@ -11,20 +11,164 @@
 #include <QTextDocument>
 #include <QFileDialog>
 #include <QTextCursor>
+#include <QHeaderView>
+#include <QPixmap>
 #include <QBrush>
+#include <QVBoxLayout>
+#include "QSidePanel/PanelRightSide.hpp"
+
+// ---------------------------
+
+#include <QTextEdit>
+#include <QLabel>
+
+// ---------------------------
+
+#include "QSidePanel/math.hpp"
+
+#include <QScroller>
+
+#include "QSidePanel/side_panel_helpers.hpp"
+
 Professor_Panel::Professor_Panel(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Professor_Panel)
 {
     ui->setupUi(this);
 
-    ui->ThemecomboBox->addItem("Light Theme");
-    ui->ThemecomboBox->addItem("Dark Theme");
-    connect(ui->ThemecomboBox,&QComboBox::currentTextChanged,this,&Professor_Panel::changeTheme) ;
+    ui->listWidget->hide();
+    ui->list_color_comboBox->hide();
+    ui->list_name_lineEdit->hide();
+    ui->treeWidget->hide();
+    ui->add_task_button->hide();
+    ui->new_list_Button->hide();
+    ui->dateTimeEdit->hide();
+    ui->task_name_lineEdit->hide();
+    ui->lineEdit_description->hide();
+    ui->label_2->hide();
+    ui->label_3->hide();
+    ui->label_4->hide();
+    ui->label_5->hide();
+    ui->label_6->hide();
+    ui->label_7->hide();
+    ui->title->hide();
+
+    QPixmap pixMap("/Users/HP/Documents/ToDoList/mentor.png") ;
+    int width = 170 ;
+    int height =170 ;
+    QPixmap scaledPixmap = pixMap.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    ui->label->setPixmap(scaledPixmap);
+    ui->label->setFixedSize(180,180) ;
+    // Left panel with buttons list in it and line edits
+       auto* panel_right = new PanelRightSide(this);
+       {
+           panel_right->setOpenEasingCurve (QEasingCurve::Type::OutExpo);
+           panel_right->setCloseEasingCurve(QEasingCurve::Type::InExpo);
+           panel_right->setPanelSize(350);
+           panel_right->init();
+
+           QVBoxLayout* lay = new QVBoxLayout;
+           {
+               QLabel* label = new QLabel("Left", this);
+               label->setAlignment(Qt::AlignCenter);
+               lay->addWidget(label);
+
+               btn_list = new QPushButton( "Show list of Tasks", this);
+
+               btn_PDF = new QPushButton( "Get PDF of tasks from list :", this);
+               list_name_PDF = new QLineEdit() ;
+
+               btn_starred = new QPushButton( "Get starred tasks from list :", this);
+               list_name_star = new QLineEdit() ;
+
+               btn_changeTheme = new QPushButton("Change Theme",this) ;
+
+               btn_add_Task_or_list = new QPushButton("Add task or list",this) ;
+
+               btn_list->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+               btn_PDF->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+               btn_starred->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+               btn_changeTheme->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+               btn_add_Task_or_list->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+               list_name_PDF->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+               list_name_star->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+               list_name_PDF->setPlaceholderText("Name of list") ;
+               list_name_star->setPlaceholderText("Name of list") ;
+
+               btn_list->setMinimumHeight(60);
+               btn_starred->setMinimumHeight(60);
+               btn_PDF->setMinimumHeight(60);
+               btn_changeTheme->setMinimumHeight(60);
+               btn_add_Task_or_list->setMinimumHeight(60);
+
+               list_name_PDF->setMinimumHeight(10);
+               list_name_star->setMinimumHeight(10);
+
+               lay->addWidget(btn_list) ;
+               lay->addWidget(btn_add_Task_or_list);
+               lay->addWidget(btn_PDF);
+               lay->addWidget(list_name_PDF);
+               lay->addWidget(btn_starred);
+               lay->addWidget(list_name_star);
+               lay->addWidget(btn_changeTheme);
+
+           }
+           QWidget* proxy = new QWidget(this);
+           proxy->setLayout(lay);
+
+           panel_right->setWidgetResizable(true);
+           panel_right->setWidget(proxy);
+
+           // Extra behavior (for example) - scrolling by gestures. Notice, that
+           // QScroller binded to `panel_left->viewport()`, not to `panel_left`
+           {
+               QScroller::grabGesture(panel_right->viewport(), QScroller::ScrollerGestureType::RightMouseButtonGesture);
+
+               auto* scroller = QScroller::scroller(panel_right->viewport());
+               {
+                   // Improve buttons pressing. But still not good
+                   QScrollerProperties props = scroller->scrollerProperties();
+                   props.setScrollMetric(QScrollerProperties::ScrollMetric::MousePressEventDelay, 0);
+                   scroller->setScrollerProperties(props);
+               }
+           }
+       }
+
+
+    // -------------------------------------------------------------------------
+
+       connect(panel_right, &SidePanel::stateChanged, this, [this](SidePanelState state)
+           {
+               this->setWindowTitle( QString::fromUtf8( to_str(state) ) );
+           });
+    // -------------------------------------------------------------------------
+
+    theme = new Theme(this) ;
+    Themes[0] = "Red And White" ;
+    Themes[1] = "Dark Theme" ;
+    Themes[2] = "Whale" ;
+    Themes[3] = "Plant" ;
+    Themes[4] = "Simple" ;
+    theme->get_themes(Themes);
+    theme->load_pushButton_text();
+    theme->get_target_window(this);
+
+    connect(btn_list, SIGNAL(clicked()),this, SLOT(on_btn_list_clicked()));
+    connect(btn_PDF, SIGNAL(clicked()),this, SLOT(on_btn_PDF_clicked()));
+    connect(btn_starred, SIGNAL(clicked()),this, SLOT(on_btn_starred_clicked()));
+    connect(btn_changeTheme, SIGNAL(clicked()),this, SLOT(on_btn_changeTheme_clicked()));
+    connect(btn_add_Task_or_list, SIGNAL(clicked()),this, SLOT(on_btn_add_task_or_list()));
+
+
 
     ui->list_color_comboBox->addItem("Red");
     changeTheme("Light Theme") ;
 
+    QStringList headers ;
+    headers<< "description" << "Due Date" ;
+    ui->treeWidget->setHeaderLabels(headers);
+    ui->treeWidget->header()->setStyleSheet("QHeaderView::section { background-color: lightblue; }");
     ui->treeWidget->clear();
     ui->treeWidget->setColumnCount(2);
 
@@ -115,10 +259,9 @@ void Professor_Panel::add_Task()
     QTreeWidgetItem *item = new QTreeWidgetItem(ui->treeWidget);
     item->setText(0,task.Task_Name);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-    item->setCheckState(0,Qt::Unchecked);
+    item->setCheckState(0,Qt::Unchecked) ;
     user->list_of_tasks[currentList] << task ;
     ui->treeWidget->addTopLevelItem(item);
-
 
     File_Functions::write_Tasks_To_File("tasks_file.txt",task,user->username,currentList) ;
     add_Child(item,task.Explanation,task.Due_Date);
@@ -249,7 +392,7 @@ void Professor_Panel::showing_notif()
 {
     QDate currentDate = QDate::currentDate() ;
     QString Date = currentDate.toString("M/d/yyyy") ;
-    qDebug() << Date ;
+    int i = 0 ;
     for(std::pair<QString,linkedList> Pair : user->list_of_tasks)
     {
         Task* task = Pair.second.head ;
@@ -260,14 +403,43 @@ void Professor_Panel::showing_notif()
             QStringList data = task->Due_Date.split(' ') ;
             if(task->notification && Date == data.at(0) && task->done == false)
             {
-                qDebug() << data.at(0) ;
-
-                show_notification("Tasks for today","You have to do " + task->Task_Name + " today.");
-                break ;
+                ui->title->setVisible(true);
+                i ++ ;
+                if(i == 1)
+                {
+                    ui->label_3->setVisible(true);
+                    ui->label_3->setText(task->Task_Name);
+                }
+                else if(i == 2)
+                {
+                    ui->label_4->setVisible(true);
+                    ui->label_4->setText(task->Task_Name);
+                }
+                else if(i == 3)
+                {
+                    ui->label_5->setVisible(true);
+                    ui->label_5->setText(task->Task_Name);
+                }
+                else if(i == 4)
+                {
+                    ui->label_6->setVisible(true);
+                    ui->label_6->setText(task->Task_Name);
+                }
+                else if(i == 5)
+                {
+                    ui->label_7->setVisible(true);
+                    ui->label_7->setText(task->Task_Name);
+                }
+                show_notification("Tasks for today","You have to do " + task->Task_Name + " today.") ;
             }
             task = task->next ;
         }
     }
+}
+
+void Professor_Panel::set_username_label(QString Username)
+{
+    ui->username->setText( Username );
 }
 void Professor_Panel::on_get_PDF_pushButton_clicked()
 {
@@ -277,6 +449,61 @@ void Professor_Panel::close_notif_Page()
 {
     notification->close() ;
     this->show();
+}
+
+void Professor_Panel::on_btn_list_clicked()
+{
+    ui->label_2->hide();
+    ui->label_3->hide();
+    ui->label_4->hide();
+    ui->label_5->hide();
+    ui->label_6->hide();
+    ui->username->hide();
+    ui->label_7->hide();
+    ui->title->hide();
+    ui->listWidget->setVisible(true);
+    load_list();
+}
+
+void Professor_Panel::on_btn_PDF_clicked()
+{
+    QString list_name = list_name_PDF->text() ;
+    getPDF(list_name);
+}
+
+void Professor_Panel::on_btn_starred_clicked()
+{
+    QString list_name = list_name_star->text() ;
+    Starred_Tasks = new starred_tasks(this) ;
+    Starred_Tasks->get_list(user->list_of_tasks[list_name]);
+    Starred_Tasks->load_starred_tasks();
+    Starred_Tasks->show();
+}
+
+void Professor_Panel::on_btn_changeTheme_clicked()
+{
+        theme->show();
+}
+
+void Professor_Panel::on_btn_add_task_or_list()
+{
+    ui->label_2->hide();
+    ui->label_3->hide();
+    ui->label_4->hide();
+    ui->label_5->hide();
+    ui->label_6->hide();
+    ui->username->hide();
+    ui->label_7->hide();
+    ui->title->hide();
+
+    ui->add_task_button->setVisible(true);
+    ui->new_list_Button->setVisible(true);
+    ui->dateTimeEdit->setVisible(true);
+    ui->list_name_lineEdit->setVisible(true);
+    ui->task_name_lineEdit->setVisible(true);
+    ui->treeWidget->setVisible(true);
+    ui->lineEdit_description->setVisible(true);
+    ui->list_color_comboBox->setVisible(true);
 }
 
 void Professor_Panel::on_get_stared_pushButton_clicked()
