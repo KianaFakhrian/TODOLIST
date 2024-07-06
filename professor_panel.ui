@@ -6,170 +6,427 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>698</height>
+    <width>1745</width>
+    <height>863</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">*{
+	
+	font-family:century gothic;
+	font-size:24px;
+	background-color:black
+}
+QPushButton
+{
+	color:black;
+	background-color: #ffe2e9;
+	border-radius:30px;
+}
+QPushButton:hover
+{
+background-color:rgb(170, 170, 255);
+}
+QLineEdit
+{
+color:white;
+}
+#frame
+{
+background-color:#bfbfbf;
+}
+#new_list_Button {
+    background-color: rgb(0, 255, 0);
+border-radius:30px;
+color:black
+}
+#add_task_button
+{
+	 background-color: rgb(0, 255, 0);
+border-radius:30px;
+color:black
+}
+
+#new_list_Button:hover{
+background-color:rgb(170, 170, 255)
+}
+#add_task_button:hover
+{
+background-color:rgb(170, 170, 255)
+}
+#dateTimeEdit
+{
+border-radius:25px;
+background-color:#ffe2e9;
+color:black;
+}
+#lineEdit_description
+{
+border-radius:25px;
+background-color:#ffe2e9;
+color:black
+}
+#list_name_lineEdit
+{
+border-radius:25px;
+background-color:#ffe2e9;
+color:black
+}
+#task_name_lineEdit
+{
+border-radius:25px;
+background-color:#ffe2e9;
+color:black
+
+}
+#treeWidget
+{
+border-radius:25px;
+background-color:#ffe2e9;
+color:black;
+font-size:20px;
+}
+#listWidget
+{
+border-radius:25px;
+color:black;
+background-color:#ffe2e9;
+}
+#label_2
+{
+border-radius:25px;
+color:black;
+background-color:#ffa683;
+}
+#label_3
+{
+border-radius:25px;
+color:black;
+background-color:#ffa683;
+}
+#label_4
+{
+border-radius:25px;
+color:black;
+background-color:#ffa683;
+}
+#label_5
+{
+border-radius:25px;
+color:black;
+background-color:#ffa683;
+}
+#label_6
+{
+border-radius:25px;
+color:black;
+background-color:#ffa683;
+}
+#label_7
+{
+border-radius:25px;
+color:black;
+background-color:#ffa683;
+}
+#title
+{
+border-radius:25px;
+color:black;
+background-color:#ffe2e9;
+}
+#username
+{
+border-radius:25px;
+color:black;
+background-color:#ffe2e9;
+}
+#dateTimeEdit
+{
+border-radius:25px;
+color:black;
+background-color:#ffe2e9;
+}
+#lineEdit_description
+{
+border-radius:25px;
+color:black;
+background-color:#ffe2e9;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="new_list_Button">
+   <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>80</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>make new list</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="add_task_button">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
+      <x>-10</x>
       <y>120</y>
-      <width>93</width>
-      <height>28</height>
+      <width>1781</width>
+      <height>881</height>
      </rect>
     </property>
-    <property name="text">
-     <string>add task</string>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
-   </widget>
-   <widget class="QListWidget" name="listWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>281</width>
-      <height>541</height>
-     </rect>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
     </property>
-   </widget>
-   <widget class="QLineEdit" name="task_name_lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>40</y>
-      <width>113</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>Task_Name</string>
-    </property>
-   </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>70</y>
-      <width>194</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="list_name_lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>580</x>
-      <y>50</y>
-      <width>113</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>List Name</string>
-    </property>
-   </widget>
-   <widget class="QTreeWidget" name="treeWidget">
-    <property name="geometry">
-     <rect>
-      <x>320</x>
-      <y>230</y>
-      <width>281</width>
-      <height>201</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string notr="true">1</string>
+    <widget class="QListWidget" name="listWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>281</width>
+       <height>841</height>
+      </rect>
      </property>
-    </column>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidget">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>20</y>
+       <width>281</width>
+       <height>841</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="add_task_button">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>270</y>
+       <width>181</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>add task</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_description">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>200</y>
+       <width>721</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="placeholderText">
+      <string>Description</string>
+     </property>
+    </widget>
+    <widget class="QDateTimeEdit" name="dateTimeEdit">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>140</y>
+       <width>261</width>
+       <height>41</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="task_name_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>620</x>
+       <y>70</y>
+       <width>261</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>Task_Name</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="new_list_Button">
+     <property name="geometry">
+      <rect>
+       <x>940</x>
+       <y>130</y>
+       <width>171</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>make new list</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="list_name_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>940</x>
+       <y>70</y>
+       <width>251</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="placeholderText">
+      <string>List Name</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="list_color_comboBox">
+     <property name="geometry">
+      <rect>
+       <x>1200</x>
+       <y>70</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>310</y>
+       <width>561</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-weight:bold;
+font-size:30px;
+border-radius:30px;
+background-color:#c6d1ff;</string>
+     </property>
+     <property name="text">
+      <string>  Professor Welcome to your To Do List</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>331</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>210</y>
+       <width>331</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>320</y>
+       <width>331</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>430</y>
+       <width>331</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>540</y>
+       <width>331</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="username">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>60</y>
+       <width>481</width>
+       <height>171</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="title">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>0</y>
+       <width>361</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-weight:bold;</string>
+     </property>
+     <property name="text">
+      <string>Tasks For Today :</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_description">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>100</y>
-      <width>113</width>
-      <height>22</height>
+      <x>830</x>
+      <y>10</y>
+      <width>171</width>
+      <height>161</height>
      </rect>
     </property>
-    <property name="placeholderText">
-     <string>Description</string>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(0,225,0);
+border-radius:80px;</string>
     </property>
-   </widget>
-   <widget class="QComboBox" name="ThemecomboBox">
-    <property name="geometry">
-     <rect>
-      <x>680</x>
-      <y>20</y>
-      <width>101</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="whatsThis">
-     <string>theme</string>
-    </property>
-    <property name="accessibleName">
-     <string>theme</string>
-    </property>
-    <property name="editable">
-     <bool>false</bool>
-    </property>
-    <property name="currentText">
+    <property name="text">
      <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="get_PDF_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>350</y>
-      <width>93</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Get PDF</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="list_color_comboBox">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>50</y>
-      <width>73</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="get_stared_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>350</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>get stared tasks</string>
     </property>
    </widget>
   </widget>
@@ -178,8 +435,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>26</height>
+     <width>1745</width>
+     <height>36</height>
     </rect>
    </property>
   </widget>
