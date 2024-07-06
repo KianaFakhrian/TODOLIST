@@ -5,7 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui
-
+QT += printsupport
+include(/Users/HP/Documents/ToDoList/QSidePanel-Sidebar-master/QSidePanel/q_side_panel.pri)
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ToDoList
@@ -28,7 +29,9 @@ SOURCES += main.cpp\
     student_panel.cpp \
     professor_panel.cpp \
     sign_in.cpp \
-    notification.cpp
+    notification.cpp \
+    starred_tasks.cpp \
+    theme.cpp
 
 HEADERS  += mainwindow.h \
     linkedlist.h \
@@ -38,16 +41,27 @@ HEADERS  += mainwindow.h \
     student_panel.h \
     professor_panel.h \
     sign_in.h \
-    notification.h
+    notification.h \
+    starred_tasks.h \
+    theme.h
 
 FORMS    += mainwindow.ui \
     student_panel.ui \
     professor_panel.ui \
     sign_in.ui \
-    notification.ui
+    notification.ui \
+    starred_tasks.ui \
+    theme.ui
 
 RESOURCES += \
     theme.qrc
 
 DISTFILES += \
-    darkTheme.qss
+    darkTheme.qss \
+    QSidePanel-Sidebar-master/QSidePanel/q_side_panel.pri \
+    QSidePanel-Sidebar-master/images/side_panel.gif \
+    QSidePanel-Sidebar-master/LICENSE \
+    QSidePanel-Sidebar-master/README.md
+
+SUBDIRS += \
+    QSidePanel-Sidebar-master/q_side_panel_proj.pro
