@@ -6,13 +6,13 @@
 }
 QPushButton
 {
-	color:white;
+	color:black;
 	background-color: rgb(112, 112, 112);
 	border-radius:30px;
 }
 QLineEdit
 {
-color:white;
+color:black;
 }
 #frame
 {
@@ -21,13 +21,13 @@ background-color:white;
 #new_list_Button {
     background-color: red;
 border-radius:30px;
-color:white
+color:black
 }
 #add_task_button
 {
 	 background-color: red;
 border-radius:30px;
-color:white
+color:black
 }
 QPushButton
 {
