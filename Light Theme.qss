@@ -1,5 +1,9 @@
+#frame
+{
+background-color:white;
+}
 QMainWindow {
-    background-color: #ffffff;
+    background-color: #aa5500;
     color: #000000;
 }
 
@@ -7,13 +11,13 @@ QLabel {
     color: #000000;
 }
 
-QPushButton {
+#add_new_list_pushButton {
     background-color: #dddddd;
     color: #000000;
     border: none;
 }
 
-QPushButton:hover {
+#add_new_list_pushButton:hover {
     background-color: #cccccc;
 }
 
