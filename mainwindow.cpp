@@ -2,13 +2,23 @@
 #include "ui_mainwindow.h"
 #include "user.h"
 #include "file_functions.h"
+#include "QSidePanel/PanelLeftSide.hpp"
+#include "QSidePanel/math.hpp"
+
+#include <QScroller>
+
+#include "QSidePanel/side_panel_helpers.hpp"
+
 #include <QMessageBox>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->invalid_password->hide();
+    ui->invalid_username->hide();
     readUsers();
     readTasks();
 }
@@ -31,21 +41,38 @@ void MainWindow::on_Login_PushB_clicked()
     student_panel = new Student_Panel(this) ;
     professor_panel = new Professor_Panel(this) ;
     readUsers();
-    if(ui->UserName_LineEdit->text().isEmpty() || ui->Password_LineEdit->text().isEmpty())
+    if(ui->UserName_LineEdit->text().isEmpty())
     {
-        QMessageBox::warning(this,"unfilled fields","Please fill all the fields correctly") ;
+        ui->invalid_username->setVisible(true);
+        ui->invalid_username->setText("Please Fill The Username Field");
+        return ;
+    }
+    else if(ui->Password_LineEdit->text().isEmpty())
+    {
+        ui->invalid_password->setVisible(true);
+        ui->invalid_password->setText("Please Fill The Password Field");
         return ;
     }
     QString username = ui->UserName_LineEdit->text() ;
     QString password = ui->Password_LineEdit->text() ;
-    if(!valid_User_Pass(username,password))
+    if(!valid_User(username))
     {
+        ui->invalid_username->setVisible(true);
+        ui->invalid_username->setText("Incorrect Username");
+        return ;
+    }
+    if(!valid_Pass(username,password))
+    {
+        ui->invalid_username->hide();
+        ui->invalid_password->setVisible(true);
+        ui->invalid_password->setText("Incorrect Password");
         return ;
     }
     if(Is_User_Student())
     {
         hide() ;
         student_panel->get_Users(&users_list);
+        student_panel->showing_notif();
         student_panel->show();
     }
     else if(Is_User_Professor())
@@ -56,7 +83,7 @@ void MainWindow::on_Login_PushB_clicked()
         professor_panel->show();
     }
 }
-bool MainWindow::valid_User_Pass(const QString& Username,const QString& Password)
+bool MainWindow::valid_Pass(const QString& Username,const QString& Password)
 {
     for(User &users:users_list)
     {
@@ -64,13 +91,24 @@ bool MainWindow::valid_User_Pass(const QString& Username,const QString& Password
         {
             username = users.username ;
             password = users.password ;
-            user = users ;
+            student_panel->set_username_label(users.username);
+            professor_panel->set_username_label(users.username);
             professor_panel->set_User(&users) ;
-//            student_panel->set_User(&users) ;
+            student_panel->set_User(&users);
             return true ;
         }
     }
-    QMessageBox::warning(this,"invalid username or password","Please Enter right username and password") ;
+    return false ;
+}
+bool MainWindow::valid_User(const QString& Username)
+{
+    for(User &users:users_list)
+    {
+        if(users.username == Username)
+        {
+            return true ;
+        }
+    }
     return false ;
 }
 

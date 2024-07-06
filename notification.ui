@@ -16,10 +16,10 @@
   <widget class="QPushButton" name="Yes">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>230</y>
-     <width>93</width>
-     <height>28</height>
+     <x>50</x>
+     <y>190</y>
+     <width>121</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -30,26 +30,29 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>230</y>
-     <width>93</width>
-     <height>28</height>
+     <y>190</y>
+     <width>141</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
     <string>No, I don't</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>101</y>
-     <width>351</width>
-     <height>51</height>
+     <x>10</x>
+     <y>90</y>
+     <width>371</width>
+     <height>71</height>
     </rect>
    </property>
-   <property name="placeholderText">
+   <property name="text">
     <string>Do you want to add notification to this task ?</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

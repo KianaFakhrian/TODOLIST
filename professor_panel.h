@@ -6,6 +6,7 @@
 #include "linkedlist.h"
 #include "notification.h"
 #include "starred_tasks.h"
+#include "theme.h"
 #include <QListWidgetItem>
 #include <QTreeWidgetItem>
 #include <QSystemTrayIcon>
@@ -26,31 +27,32 @@ public:
 public:
     void get_Users(QList<User>* users_List) ;
 
+    void set_User(User*) ;
+
     void add_Task() ;
 
     void add_list() ;
-
-    void set_User(User*) ;
 
     void load_list() ;
 
     void load_tasks() ;
 
-    void search_user() ;
-
     void add_Child(QTreeWidgetItem* parent,QString description,QString due_date) ;
 
     void loadTheme(const QString &) ;
-
-    void getPDF(const QString &) ;
-
-    void showing_notif() ;
 
     void show_notification(const QString &title,const QString &message) ;
 
     void change_List_Color(QListWidgetItem*,const QColor&) ;
 
-public slots:
+    void showing_notif() ;
+
+    void set_username_label(QString Username) ;
+
+private:
+    void getPDF(const QString &) ;
+
+private slots:
     void on_add_task_button_clicked();
 
     void on_new_list_Button_clicked();
@@ -69,17 +71,37 @@ public slots:
 
     void close_notif_Page() ;
 
+    void on_btn_list_clicked() ;
+
+    void on_btn_PDF_clicked() ;
+
+    void on_btn_starred_clicked() ;
+
+    void on_btn_changeTheme_clicked() ;
+
+    void on_btn_add_task_or_list() ;
+
+
 protected:
     Ui::Professor_Panel *ui;
     QString task_name ;
     QString due_date ;
-    User* user ;
     QList<User>* users ;
     Notification* notification ;
     starred_tasks* Starred_Tasks ;
     QString currentList;
-    QMenu *taskListMenu;
     QSystemTrayIcon *trayIcon;
+    QLineEdit* list_name_star ;
+    QLineEdit* list_name_PDF ;
+    QPushButton* btn_list  ;
+    QPushButton* btn_PDF ;
+    QPushButton* btn_starred ;
+    QPushButton* btn_changeTheme ;
+    QPushButton* btn_add_Task_or_list ;
+    Theme* theme ;
+    QString Themes[5] ;
+private:
+    User* user ;
 };
 
 #endif // PROFESSOR_PANEL_H

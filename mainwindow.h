@@ -21,7 +21,8 @@ public:
     ~MainWindow();
     void readUsers() ;
     void readTasks() ;
-    bool valid_User_Pass(const QString&,const QString&) ;
+    bool valid_Pass(const QString&,const QString&) ;
+    bool valid_User(const QString&) ;
     bool Is_User_Student() ;
     bool Is_User_Professor() ;
 
