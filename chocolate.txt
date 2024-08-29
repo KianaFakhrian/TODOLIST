@@ -1,0 +1,27 @@
+*
+{
+	background-color:#fff6e4;
+	font-family:Salute Riches OTF And TTF;
+	font-size:24px;
+}
+QPushButton
+{
+	background-color:#aa5500;
+	border-radius:30px;
+}
+QPushButton:hover
+{
+	background-color:#fff6e4;
+}
+QLineEdit
+{
+color:black;
+}
+QTreeWidget
+{
+color:black;
+}
+QListWidget
+{
+color:black;
+}

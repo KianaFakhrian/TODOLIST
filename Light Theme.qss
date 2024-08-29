@@ -1,0 +1,38 @@
+#frame
+{
+background-color:white;
+}
+QMainWindow {
+    background-color: #aa5500;
+    color: #000000;
+}
+
+QLabel {
+    color: #000000;
+}
+
+#add_new_list_pushButton {
+    background-color: #dddddd;
+    color: #000000;
+    border: none;
+}
+
+#add_new_list_pushButton:hover {
+    background-color: #cccccc;
+}
+
+QListWidget {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+QToolButton {
+    background-color: #dddddd;
+    color: #000000;
+}
+
+QLineEdit {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+}

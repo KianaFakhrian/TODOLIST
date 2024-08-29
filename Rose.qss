@@ -1,0 +1,115 @@
+*{
+	
+	font-family:century gothic;
+	font-size:24px;
+	background-color:#faff98;
+}
+QPushButton
+{
+	color:black;
+	background-color: #ffc1ed;
+	border-radius:30px;
+}
+QLineEdit
+{
+color:black;
+}
+#frame
+{
+background-color:#ffe6b9;
+}
+#add_new_list_pushButton {
+    background-color: #ffc1ed;
+border-radius:30px;
+color:black
+}
+#add_new_task_pushButton
+{
+	 background-color: #ffc1ed;
+border-radius:30px;
+color:black
+}
+QPushButton
+{
+	background-color: #ffc1ed;
+border-radius:30px;
+}
+#add_new_list_pushButton:hover{
+background-color:rgb#faff98
+}
+#add_new_task_pushButton:hover
+{
+background-color:rgb#faff98
+}
+#dateTimeEdit
+{
+background-color:#ffc1ed;
+color:black
+}
+#description_lineEdit
+{
+background-color:#ffc1ed;
+color:black
+}
+#list_name_lineEdit
+{
+background-color:#ffc1ed;
+color:black
+}
+#task_name_lineEdit
+{
+background-color:#ffc1ed;
+color:black
+
+}
+#treeWidget
+{
+background-color:#ffc1ed;
+color:white;
+font-size:20px;
+}
+#listWidget
+{
+color:black;
+background-color:#ffc1ed;
+}
+#label_2
+{
+color:black;
+background-color:#ffc1ed;
+}
+#label_3
+{
+color:black;
+background-color:#ffc1ed;
+}
+#label_4
+{
+color:black;
+background-color:#ffc1ed;
+}
+#label_5
+{
+color:black;
+background-color:#ffc1ed;
+}
+#label_6
+{
+color:black;
+background-color:#ffc1ed;
+}
+#label_7
+{
+color:black;
+background-color:#ffc1ed;
+}
+#title
+{
+color:black;
+background-color:#ffc1ed;
+}
+#username
+{
+color:black;
+background-color:#ffc1ed;
+}

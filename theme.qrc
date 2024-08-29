@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>darkTheme.qss</file>
+        <file>Light Theme.qss</file>
+        <file>accountant_2607096.png</file>
+        <file>chocolate.qss</file>
+        <file>Rose.qss</file>
+        <file>mentor.png</file>
+        <file>Red and White.qss</file>
+        <file>whale.qss</file>
+        <file>Green and black.qss</file>
+    </qresource>
+</RCC>
